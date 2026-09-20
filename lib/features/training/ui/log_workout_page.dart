@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../../common/app_dialogs.dart';
 import '../data/workout_logs_dao.dart';
 import '../providers.dart';
+import 'log_set_form.dart';
 
 /// 训练记录录入页：一次进入 = 一次训练课（session），连续记录共享。
 class LogWorkoutPage extends ConsumerStatefulWidget {
@@ -20,46 +21,23 @@ class _LogWorkoutPageState extends ConsumerState<LogWorkoutPage> {
   final _repsController = TextEditingController();
   double _rpe = 8;
   bool _recordRpe = false;
+  DateTime _date = DateTime.now();
   int _savedSets = 0;
   final String _sessionId = const Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
-    final exerciseField = CupertinoTextField(
-      controller: _exerciseController,
-      placeholder: '动作名，如：深蹲',
-    );
-    final weightField = CupertinoTextField(
-      controller: _weightController,
-      placeholder: '重量 kg',
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-    );
-    final repsField = CupertinoTextField(
-      controller: _repsController,
-      placeholder: '次数',
-      keyboardType: const TextInputType.numberWithOptions(),
-    );
-    final rpeToggle = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text('记录 RPE', style: TextStyle(fontSize: 15)),
-        CupertinoSwitch(
-          value: _recordRpe,
-          onChanged: (v) => setState(() => _recordRpe = v),
-        ),
-      ],
-    );
-    final rpeSlider = CupertinoSlider(
-      value: _rpe,
-      min: 0,
-      max: 10,
-      divisions: 10,
-      onChanged: (v) => setState(() => _rpe = v),
-    );
-    final savedText = Text(
-      '本次训练已记录 $_savedSets 组',
-      style: const TextStyle(color: CupertinoColors.secondaryLabel),
-      textAlign: TextAlign.center,
+    final form = LogSetForm(
+      exercise: _exerciseController,
+      weight: _weightController,
+      reps: _repsController,
+      rpe: _rpe,
+      recordRpe: _recordRpe,
+      date: _date,
+      onDateChanged: (value) => setState(() => _date = value),
+      onToggleRpe: (value) => setState(() => _recordRpe = value),
+      onRpeChanged: (value) => setState(() => _rpe = value),
+      savedSets: _savedSets,
     );
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(middle: Text('记录训练')),
@@ -67,32 +45,12 @@ class _LogWorkoutPageState extends ConsumerState<LogWorkoutPage> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const Text(
-              '动作与组',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 12),
-            exerciseField,
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(child: weightField),
-                const SizedBox(width: 12),
-                Expanded(child: repsField),
-              ],
-            ),
-            const SizedBox(height: 24),
-            rpeToggle,
-            if (_recordRpe) ...[
-              rpeSlider,
-              Center(child: Text('RPE ${_rpe.toStringAsFixed(0)}')),
-            ],
+            form,
             const SizedBox(height: 32),
             CupertinoButton.filled(
               onPressed: _submit,
               child: const Text('记录这一组'),
             ),
-            if (_savedSets > 0) ...[const SizedBox(height: 12), savedText],
           ],
         ),
       ),
@@ -103,11 +61,13 @@ class _LogWorkoutPageState extends ConsumerState<LogWorkoutPage> {
     final exercise = _exerciseController.text.trim();
     final weight = double.tryParse(_weightController.text.trim());
     final reps = int.tryParse(_repsController.text.trim());
-    if (exercise.isEmpty ||
-        weight == null ||
-        weight <= 0 ||
-        reps == null ||
-        reps <= 0) {
+    final valid =
+        exercise.isNotEmpty &&
+        weight != null &&
+        weight > 0 &&
+        reps != null &&
+        reps > 0;
+    if (!valid) {
       await showAppAlert(context, '请填写动作名、大于 0 的重量与次数');
       return;
     }
@@ -121,7 +81,7 @@ class _LogWorkoutPageState extends ConsumerState<LogWorkoutPage> {
         reps: reps,
         rpe: _recordRpe ? _rpe : null,
         sessionId: _sessionId,
-        performedAt: DateTime.now(),
+        performedAt: _date,
       ),
     );
     if (!mounted) return;

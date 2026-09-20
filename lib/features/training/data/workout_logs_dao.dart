@@ -54,6 +54,16 @@ class WorkoutLogsDao {
     return value == null ? 1 : (value as num).toInt() + 1;
   }
 
+  /// 全部记录，时间倒序（历史列表用）。
+  Future<List<WorkoutSetLog>> listAll({int limit = 500}) async {
+    final rows = await _db.query(
+      Tables.workoutLogs,
+      orderBy: 'performed_at DESC',
+      limit: limit,
+    );
+    return [for (final row in rows) _fromRow(row)];
+  }
+
   /// [since] 起的记录，时间升序（便于趋势计算）；可按动作过滤。
   Future<List<WorkoutSetLog>> listSince(
     DateTime since, {

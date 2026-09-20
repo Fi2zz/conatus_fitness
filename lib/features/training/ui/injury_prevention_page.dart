@@ -14,7 +14,17 @@ class InjuryPreventionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('伤病防护')),
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('伤病防护'),
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.of(
+            context,
+            rootNavigator: true,
+          ).pushNamed(AppRoutes.injuryRecords),
+          child: const Icon(CupertinoIcons.pencil),
+        ),
+      ),
       child: SafeArea(
         child: Column(
           children: [

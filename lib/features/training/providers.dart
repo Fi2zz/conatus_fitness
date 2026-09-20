@@ -64,6 +64,12 @@ final workoutLogsDaoProvider = FutureProvider<WorkoutLogsDao>((ref) async {
   return WorkoutLogsDao(db);
 });
 
+/// 训练历史（时间倒序的原始组记录）。
+final workoutHistoryProvider = FutureProvider<List<WorkoutSetLog>>((ref) async {
+  final dao = await ref.watch(workoutLogsDaoProvider.future);
+  return dao.listAll();
+});
+
 /// 历史计划列表（最新在前）。
 final plansProvider = FutureProvider<List<StoredPlan>>((ref) async {
   final db = (await ref.watch(appDatabaseProvider.future)).db;

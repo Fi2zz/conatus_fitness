@@ -32,6 +32,7 @@ class TrainingPage extends ConsumerWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            _navAction(context, CupertinoIcons.clock, AppRoutes.workoutHistory),
             _navAction(
               context,
               CupertinoIcons.plus_square,
