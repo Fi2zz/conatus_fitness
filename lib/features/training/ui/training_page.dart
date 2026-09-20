@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app.dart';
+import '../../../di/llm_providers.dart';
 import '../../common/domain_placeholder.dart';
 import '../data/plans_dao.dart';
 import '../providers.dart';

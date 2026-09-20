@@ -2,7 +2,7 @@ import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
-import '../data/event_log_dao.dart';
+import '../../../data/event_log_dao.dart';
 import '../data/plans_dao.dart';
 import 'injury_check_tool.dart';
 import 'planner_input.dart';

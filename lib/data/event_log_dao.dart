@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:sqflite/sqflite.dart';
 
-import '../../../data/schema.dart';
+import 'schema.dart';
 
 /// event_log 表写入（架构 14.3.1：SafetyGuard 改写/拦截需可追溯）。
 class EventLogDao {

@@ -2,8 +2,8 @@ import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
+import '../../../data/event_log_dao.dart';
 import '../data/agent_memory_dao.dart';
-import '../data/event_log_dao.dart';
 import '../data/workout_logs_dao.dart';
 import 'analysis_log_tools.dart';
 import 'analysis_prompt.dart';

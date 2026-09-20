@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 import 'features/music/ui/music_page.dart';
+import 'features/music/ui/playlist_detail_page.dart';
+import 'features/music/ui/playlist_setup_page.dart';
 import 'features/profile/ui/profile_page.dart';
 import 'features/shell/home_shell.dart';
 import 'features/training/domain/injury_risk_report.dart';
@@ -33,6 +35,8 @@ abstract final class AppRoutes {
   static const injuryPrevention = '/training/injury-prevention';
   static const injuryRecords = '/training/injury-records';
   static const injuryPreventionResult = '/training/injury-prevention-result';
+  static const playlistSetup = '/music/curate';
+  static const playlistDetail = '/music/playlist';
 }
 
 class FitnessApp extends StatelessWidget {
@@ -72,6 +76,10 @@ class FitnessApp extends StatelessWidget {
       AppRoutes.injuryRecords => const InjuryRecordsPage(),
       AppRoutes.injuryPreventionResult => InjuryRiskResultPage(
         report: settings.arguments as InjuryRiskReport,
+      ),
+      AppRoutes.playlistSetup => const PlaylistSetupPage(),
+      AppRoutes.playlistDetail => PlaylistDetailPage(
+        playlistId: settings.arguments as String,
       ),
       _ => null,
     };

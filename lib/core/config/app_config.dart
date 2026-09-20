@@ -5,7 +5,7 @@ class AppConfig {
   const AppConfig({
     this.llmBaseUrl = '',
     this.llmApiKey = '',
-    this.llmModel = '',
+    this.llmModel = 'doubao-seed-2.0-mini',
     this.cloudAsrEnabled = false,
     this.cloudTtsEnabled = false,
     this.localFirst = true,

@@ -4,8 +4,8 @@ import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
+import '../../../data/event_log_dao.dart';
 import '../data/agent_memory_dao.dart';
-import '../data/event_log_dao.dart';
 import '../data/workout_logs_dao.dart';
 import '../domain/training_suggestion.dart';
 import '../domain/training_suggestion_codec.dart';
@@ -46,7 +46,9 @@ class SuggestionAgent {
     final tools = ToolRegistry()..register(validate);
 
     final prompt = SystemPrompt()
-      ..section(PromptSection(name: 'suggestion', text: SuggestionPrompt.system));
+      ..section(
+        PromptSection(name: 'suggestion', text: SuggestionPrompt.system),
+      );
     final loop = AgentLoop(
       llm: llm,
       tools: tools,
@@ -61,7 +63,9 @@ class SuggestionAgent {
     );
 
     try {
-      await loop.run(SuggestionPrompt.userBrief(input, await _historySummary()));
+      await loop.run(
+        SuggestionPrompt.userBrief(input, await _historySummary()),
+      );
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
     }
@@ -91,8 +95,8 @@ class SuggestionAgent {
   }
 
   Future<void> _log(String kind, String reason) => eventLog.record(
-        const Uuid().v4(),
-        _source,
-        {'kind': kind, 'reason': reason},
-      );
+    const Uuid().v4(),
+    _source,
+    {'kind': kind, 'reason': reason},
+  );
 }
