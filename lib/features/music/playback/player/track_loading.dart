@@ -16,10 +16,11 @@ Future<String?> loadAndPlay(
 ) async {
   const String tag = 'playback';
   try {
-    final url = await resolver.resolve(track);
+    final resolution = await resolver.resolve(track);
+    final url = resolution.url;
     if (url == null) {
-      AppLog.error(tag, '${track.title} 取不到播放地址（可能需要会员或已下架）');
-      return '这首歌取不到播放地址（可能需要会员或已下架）';
+      AppLog.error(tag, '${track.title}：${resolution.message}');
+      return resolution.message ?? '取不到播放地址';
     }
     await player.play(url);
     return null;

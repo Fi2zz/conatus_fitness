@@ -148,6 +148,22 @@ void main() {
     expect(tracks.single.artist, 'RyaVocal');
   });
 
+  test('search：playFlag 映射成可播标记（false = 开放平台无资源）', () async {
+    const mixed = '''
+{"code":200,"data":{"recordCount":2,"records":[
+{"id":"AAA","name":"Uptown Funk","artists":[{"id":null,"name":"Mark Ronson"}],
+"playFlag":false,"vipFlag":false},
+{"id":"BBB","name":"晴天(深情版)","artists":[{"id":null,"name":"Lucky小爱"}],
+"playFlag":true,"vipFlag":false}]}}
+''';
+    final (source, _) = _source(search: mixed, token: 'tb');
+
+    final tracks = await source.search('晴天');
+
+    expect(tracks.first.playable, isFalse);
+    expect(tracks.last.playable, isTrue);
+  });
+
   test('未登录：匿名令牌被拒（301）时抛 needsLogin 异常', () async {
     final (source, calls) = _source(
       search: '{"code":301,"message":"用户未授权当前接口"}',

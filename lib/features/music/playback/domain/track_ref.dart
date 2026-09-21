@@ -8,6 +8,7 @@ class TrackRef {
     required this.sourceId,
     required this.title,
     this.artist,
+    this.playable = true,
   });
 
   /// 音源标识，与音源的 `id` 对应（如 'netease'）。
@@ -19,4 +20,10 @@ class TrackRef {
   final String title;
 
   final String? artist;
+
+  /// 音源声明的可播标记（网易云 search 的 `playFlag`）。
+  ///
+  /// 实测：`false` 的曲目在开放平台没有播放资源，取地址必然为空（欧美大厂牌
+  /// 版权未覆盖的曲目就是这类），故解析时直接跳过，不必浪费请求。
+  final bool playable;
 }

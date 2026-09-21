@@ -74,6 +74,8 @@ class NeteaseMusicSource implements MusicSource {
     sourceId: '${record['id']}',
     title: '${record['name']}',
     artist: _artists(record),
+    // playFlag=false 即开放平台没有播放资源（实测 detail 必回 playUrl=null）。
+    playable: record['playFlag'] != false,
   );
 
   static String? _artists(Map<dynamic, dynamic> record) {
