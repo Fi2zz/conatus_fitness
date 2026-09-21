@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../app.dart';
-import '../../../core/format/date_text.dart';
+import '../../../../app.dart';
+import '../../../../core/format/date_text.dart';
 import '../data/playlists_dao.dart';
 
 /// 歌单列表行：名称 + 曲目数 + 创建日期。

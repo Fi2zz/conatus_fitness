@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
+import '../../../di/agent_run.dart';
 import '../data/plans_dao.dart';
 import 'injury_check_tool.dart';
 import 'planner_input.dart';
@@ -17,12 +18,12 @@ import 'validate_plan_tool.dart';
 /// 结构校验 + SafetyGuard 终审，失败经 reflectAndRetry 反思重试）→ 落库。
 class PlannerAgent {
   PlannerAgent({
-    required this.llm,
+    required this.ctx,
     required this.plansDao,
     required this.eventLog,
   });
 
-  final LlmProvider llm;
+  final Context ctx;
   final PlansDao plansDao;
   final EventLogDao eventLog;
 
@@ -38,23 +39,22 @@ class PlannerAgent {
 
     final prompt = SystemPrompt()
       ..section(PromptSection(name: 'planner', text: PlannerPrompt.system));
-    final loop = AgentLoop(
-      llm: llm,
+    final run = AgentRun.open(
+      ctx,
+      name: 'planner',
       tools: tools,
-      session: Session(id: 'planner_${const Uuid().v4()}'),
       systemPrompt: prompt,
-      reflector: Reflector(
-        llm: llm,
-        strategy: ReflectionStrategy.onError,
-        maxRetries: _maxRetries,
-      ),
+      session: Session(id: 'planner_${const Uuid().v4()}'),
       maxSteps: _maxSteps,
+      maxRetries: _maxRetries,
     );
 
     try {
-      await loop.run(PlannerPrompt.userBrief(input));
+      await run.loop.run(PlannerPrompt.userBrief(input));
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
+    } finally {
+      run.dispose();
     }
     final plan = validate.latestPlan;
     if (plan == null) {

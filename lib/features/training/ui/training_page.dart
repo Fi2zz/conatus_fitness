@@ -15,17 +15,16 @@ class TrainingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ready = ref.watch(llmReadyProvider);
-    Widget body;
-    if (!ready) {
-      body = const DomainPlaceholder(
+    final body = switch (ref.watch(llmStatusProvider)) {
+      // 读盘期与内容加载同形（转圈），避免启动时闪引导态。
+      LlmStatus.loading => const Center(child: CupertinoActivityIndicator()),
+      LlmStatus.notConfigured => const DomainPlaceholder(
         icon: CupertinoIcons.lock_circle,
         title: 'AI 训练计划',
-        subtitle: '通过 --dart-define 注入 ARK_API_KEY 与 ARK_BASE_URL 后即可使用',
-      );
-    } else {
-      body = _plansBody(context, ref);
-    }
+        subtitle: '在「我的 → 模型接入」填好 Base URL 与 API Key 后即可使用',
+      ),
+      LlmStatus.ready => _plansBody(context, ref),
+    };
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: const Text('训练'),

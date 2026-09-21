@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../app.dart';
-import '../../../di/llm_providers.dart';
-import '../../common/domain_placeholder.dart';
+import '../../../../app.dart';
+import '../../../../di/llm_providers.dart';
+import '../../../common/domain_placeholder.dart';
 import '../providers.dart';
 import 'playlist_row.dart';
 
@@ -13,22 +13,22 @@ class MusicPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ready = ref.watch(llmReadyProvider);
-    Widget body;
-    if (!ready) {
-      body = const DomainPlaceholder(
+    final status = ref.watch(llmStatusProvider);
+    final body = switch (status) {
+      // 读盘期与内容加载同形（转圈），避免启动时闪引导态。
+      LlmStatus.loading => const Center(child: CupertinoActivityIndicator()),
+      LlmStatus.notConfigured => const DomainPlaceholder(
         icon: CupertinoIcons.lock_circle,
         title: 'AI 训练音乐',
-        subtitle: '通过 --dart-define 注入 ARK_API_KEY 与 ARK_BASE_URL 后即可使用',
-      );
-    } else {
-      body = _playlistsBody(ref);
-    }
+        subtitle: '在「我的 → 模型接入」填好 Base URL 与 API Key 后即可使用',
+      ),
+      LlmStatus.ready => _playlistsBody(ref),
+    };
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: const Text('音乐'),
         automaticallyImplyLeading: false,
-        trailing: ready ? _addAction(context) : null,
+        trailing: status == LlmStatus.ready ? _addAction(context) : null,
       ),
       child: SafeArea(child: body),
     );

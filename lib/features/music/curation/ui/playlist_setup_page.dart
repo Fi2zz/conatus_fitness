@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../common/app_dialogs.dart';
-import '../../common/segmented_row.dart';
+import '../../../common/app_dialogs.dart';
+import '../../../common/segmented_row.dart';
 import '../agents/curator_input.dart';
 import 'playlist_generation_flow.dart';
 

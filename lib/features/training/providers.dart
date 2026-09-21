@@ -10,11 +10,11 @@ import 'data/workout_logs_dao.dart';
 
 /// Planner Agent 装配；LLM 未配置时为 null。
 final plannerAgentProvider = FutureProvider<PlannerAgent?>((ref) async {
-  final llm = ref.watch(llmServiceProvider);
-  if (llm == null) return null;
+  if (ref.watch(llmStatusProvider) != LlmStatus.ready) return null;
+  final ctx = ref.watch(agentContextProvider);
   final db = (await ref.watch(appDatabaseProvider.future)).db;
   return PlannerAgent(
-    llm: llm,
+    ctx: ctx,
     plansDao: PlansDao(db),
     eventLog: EventLogDao(db),
   );

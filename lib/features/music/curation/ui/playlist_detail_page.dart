@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../common/domain_placeholder.dart';
-import '../domain/music_playlist.dart';
+import '../../../common/domain_placeholder.dart';
+import '../../domain/music_playlist.dart';
 import '../providers.dart';
 import 'bpm_curve_chart.dart';
 import 'playlist_section_view.dart';

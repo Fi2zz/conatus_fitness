@@ -1,8 +1,9 @@
 import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
-import '../../../core/tools/tool.dart';
-import '../../../data/event_log_dao.dart';
+import '../../../../core/tools/tool.dart';
+import '../../../../data/event_log_dao.dart';
+import '../../../../di/agent_run.dart';
 import '../data/music_prefs_dao.dart';
 import '../data/playlists_dao.dart';
 import 'curator_input.dart';
@@ -18,13 +19,13 @@ import 'validate_playlist_tool.dart';
 /// 结构校验 + SafetyGuard 终审，失败经 reflectAndRetry 反思重试）→ 落库。
 class CuratorAgent {
   CuratorAgent({
-    required this.llm,
+    required this.ctx,
     required this.playlistsDao,
     required this.prefsDao,
     required this.eventLog,
   });
 
-  final LlmProvider llm;
+  final Context ctx;
   final PlaylistsDao playlistsDao;
   final MusicPrefsDao prefsDao;
   final EventLogDao eventLog;
@@ -43,23 +44,22 @@ class CuratorAgent {
       ..section(
         PromptSection(name: 'music_curator', text: CuratorPrompt.system),
       );
-    final loop = AgentLoop(
-      llm: llm,
+    final run = AgentRun.open(
+      ctx,
+      name: 'curator',
       tools: tools,
-      session: Session(id: 'curator_${const Uuid().v4()}'),
       systemPrompt: prompt,
-      reflector: Reflector(
-        llm: llm,
-        strategy: ReflectionStrategy.onError,
-        maxRetries: _maxRetries,
-      ),
+      session: Session(id: 'curator_${const Uuid().v4()}'),
       maxSteps: _maxSteps,
+      maxRetries: _maxRetries,
     );
 
     try {
-      await loop.run(CuratorPrompt.userBrief(input));
+      await run.loop.run(CuratorPrompt.userBrief(input));
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
+    } finally {
+      run.dispose();
     }
     final playlist = validate.latestPlaylist;
     if (playlist == null) {

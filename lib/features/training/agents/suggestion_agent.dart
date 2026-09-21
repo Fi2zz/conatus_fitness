@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
+import '../../../di/agent_run.dart';
 import '../data/agent_memory_dao.dart';
 import '../data/workout_logs_dao.dart';
 import '../domain/training_suggestion.dart';
@@ -22,13 +23,13 @@ import 'validate_suggestion_tool.dart';
 /// 不缺位（validate_suggestion 工具内）。
 class SuggestionAgent {
   SuggestionAgent({
-    required this.llm,
+    required this.ctx,
     required this.logsDao,
     required this.memoryDao,
     required this.eventLog,
   });
 
-  final LlmProvider llm;
+  final Context ctx;
   final WorkoutLogsDao logsDao;
   final AgentMemoryDao memoryDao;
   final EventLogDao eventLog;
@@ -49,25 +50,24 @@ class SuggestionAgent {
       ..section(
         PromptSection(name: 'suggestion', text: SuggestionPrompt.system),
       );
-    final loop = AgentLoop(
-      llm: llm,
+    final run = AgentRun.open(
+      ctx,
+      name: 'suggestion',
       tools: tools,
-      session: Session(id: 'suggestion_${const Uuid().v4()}'),
       systemPrompt: prompt,
-      reflector: Reflector(
-        llm: llm,
-        strategy: ReflectionStrategy.onError,
-        maxRetries: _maxRetries,
-      ),
+      session: Session(id: 'suggestion_${const Uuid().v4()}'),
       maxSteps: _maxSteps,
+      maxRetries: _maxRetries,
     );
 
     try {
-      await loop.run(
+      await run.loop.run(
         SuggestionPrompt.userBrief(input, await _historySummary()),
       );
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
+    } finally {
+      run.dispose();
     }
     final suggestion = validate.latestSuggestion;
     if (suggestion == null) {

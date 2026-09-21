@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../data/schema.dart';
-import '../domain/music_playlist.dart';
-import '../domain/music_playlist_codec.dart';
+import '../../../../data/schema.dart';
+import '../../domain/music_playlist.dart';
+import '../../domain/music_playlist_codec.dart';
 
 /// playlists 表中的一条持久化歌单。
 class StoredPlaylist {

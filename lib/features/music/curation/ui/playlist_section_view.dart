@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../domain/music_playlist.dart';
+import '../../domain/music_playlist.dart';
 
 /// 阶段分组：阶段标题 + 曲目行。
 class PlaylistSectionView extends StatelessWidget {

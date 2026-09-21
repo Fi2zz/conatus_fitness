@@ -14,11 +14,11 @@ import 'data/workout_logs_dao.dart';
 final injuryPreventionAgentProvider = FutureProvider<InjuryPreventionAgent?>((
   ref,
 ) async {
-  final llm = ref.watch(llmServiceProvider);
-  if (llm == null) return null;
+  if (ref.watch(llmStatusProvider) != LlmStatus.ready) return null;
+  final ctx = ref.watch(agentContextProvider);
   final db = (await ref.watch(appDatabaseProvider.future)).db;
   return InjuryPreventionAgent(
-    llm: llm,
+    ctx: ctx,
     logsDao: WorkoutLogsDao(db),
     profileDao: ProfileDao(db),
     memoryDao: AgentMemoryDao(db),
@@ -28,11 +28,11 @@ final injuryPreventionAgentProvider = FutureProvider<InjuryPreventionAgent?>((
 
 /// Analysis Agent 装配（架构 5.2）；LLM 未配置时为 null。
 final analysisAgentProvider = FutureProvider<AnalysisAgent?>((ref) async {
-  final llm = ref.watch(llmServiceProvider);
-  if (llm == null) return null;
+  if (ref.watch(llmStatusProvider) != LlmStatus.ready) return null;
+  final ctx = ref.watch(agentContextProvider);
   final db = (await ref.watch(appDatabaseProvider.future)).db;
   return AnalysisAgent(
-    llm: llm,
+    ctx: ctx,
     logsDao: WorkoutLogsDao(db),
     memoryDao: AgentMemoryDao(db),
     eventLog: EventLogDao(db),
@@ -41,11 +41,11 @@ final analysisAgentProvider = FutureProvider<AnalysisAgent?>((ref) async {
 
 /// Suggestion Agent 装配（架构 5.3）；LLM 未配置时为 null。
 final suggestionAgentProvider = FutureProvider<SuggestionAgent?>((ref) async {
-  final llm = ref.watch(llmServiceProvider);
-  if (llm == null) return null;
+  if (ref.watch(llmStatusProvider) != LlmStatus.ready) return null;
+  final ctx = ref.watch(agentContextProvider);
   final db = (await ref.watch(appDatabaseProvider.future)).db;
   return SuggestionAgent(
-    llm: llm,
+    ctx: ctx,
     logsDao: WorkoutLogsDao(db),
     memoryDao: AgentMemoryDao(db),
     eventLog: EventLogDao(db),

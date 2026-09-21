@@ -6,7 +6,8 @@ import 'core/config/app_config.dart';
 import 'di/app_providers.dart';
 
 void main() {
-  // 密钥经构建期注入（--dart-define），禁止硬编码入库；base/model 提供默认值。
+  // 构建期默认值（--dart-define）：设置页改动落 shared_preferences 并优先生效；
+  // 密钥同样经构建期注入，禁止硬编码入库。
   const config = AppConfig(
     llmBaseUrl: String.fromEnvironment(
       'ARK_BASE_URL',
@@ -17,10 +18,13 @@ void main() {
       'ARK_MODEL',
       defaultValue: 'doubao-seed-2.0-mini',
     ),
+    neteaseAppId: String.fromEnvironment('NETEASE_APP_ID'),
+    neteasePrivateKey: String.fromEnvironment('NETEASE_PRIVATE_KEY'),
+    neteaseApiBaseUrl: String.fromEnvironment('NETEASE_API_BASE_URL'),
   );
   runApp(
     ProviderScope(
-      overrides: [appConfigProvider.overrideWithValue(config)],
+      overrides: [appConfigDefaultsProvider.overrideWithValue(config)],
       child: const FitnessApp(),
     ),
   );

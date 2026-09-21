@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
+import '../../../di/agent_run.dart';
 import '../data/agent_memory_dao.dart';
 import '../data/workout_logs_dao.dart';
 import 'analysis_log_tools.dart';
@@ -20,13 +21,13 @@ import 'recovery_signal_tool.dart';
 /// 输出为文本结论、无负荷处方，故不经 SafetyGuard（14.3.1 仅约束身体负荷输出）。
 class AnalysisAgent {
   AnalysisAgent({
-    required this.llm,
+    required this.ctx,
     required this.logsDao,
     required this.memoryDao,
     required this.eventLog,
   });
 
-  final LlmProvider llm;
+  final Context ctx;
   final WorkoutLogsDao logsDao;
   final AgentMemoryDao memoryDao;
   final EventLogDao eventLog;
@@ -44,26 +45,25 @@ class AnalysisAgent {
 
     final prompt = SystemPrompt()
       ..section(PromptSection(name: 'analysis', text: AnalysisPrompt.system));
-    final loop = AgentLoop(
-      llm: llm,
+    final run = AgentRun.open(
+      ctx,
+      name: 'analysis',
       tools: tools,
-      session: Session(id: 'analysis_${const Uuid().v4()}'),
       systemPrompt: prompt,
-      reflector: Reflector(
-        llm: llm,
-        strategy: ReflectionStrategy.onError,
-        maxRetries: _maxRetries,
-      ),
+      session: Session(id: 'analysis_${const Uuid().v4()}'),
       maxSteps: _maxSteps,
+      maxRetries: _maxRetries,
     );
 
     final AgentTurn turn;
     try {
-      turn = await loop.run(
+      turn = await run.loop.run(
         AnalysisPrompt.userBrief(await _previousConclusion()),
       );
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
+    } finally {
+      run.dispose();
     }
     final reply = turn.reply.trim();
     if (reply.isEmpty) {

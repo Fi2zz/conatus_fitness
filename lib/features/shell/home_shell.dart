@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../music/ui/music_page.dart';
+import '../music/curation/ui/music_page.dart';
 import '../profile/ui/profile_page.dart';
 import '../training/ui/training_page.dart';
 

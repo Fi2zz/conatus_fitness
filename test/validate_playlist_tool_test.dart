@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:conatus/conatus.dart' show ToolCall, ToolContext, ToolResult;
-import 'package:conatus_fitness/features/music/agents/validate_playlist_tool.dart';
+import 'package:conatus_fitness/features/music/curation/agents/validate_playlist_tool.dart';
 
 const validPlaylist = '''
 {

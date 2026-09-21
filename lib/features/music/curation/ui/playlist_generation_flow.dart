@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/tools/tool.dart';
-import '../../../app.dart';
-import '../../common/app_dialogs.dart';
+import '../../../../core/tools/tool.dart';
+import '../../../../app.dart';
+import '../../../common/app_dialogs.dart';
 import '../agents/curator_input.dart';
 import '../providers.dart';
 

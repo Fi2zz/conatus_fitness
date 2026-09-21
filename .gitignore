@@ -33,6 +33,11 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# 本地凭据（--dart-define-from-file 注入，禁止入库）
+/env.json
+/.env
+/.env.*
+
 # Symbolication related
 app.*.symbols
 

@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../../../data/schema.dart';
+import '../../../../data/schema.dart';
 
 /// music_preferences 表中的一条偏好反馈（架构 10.1）。
 class MusicSignal {

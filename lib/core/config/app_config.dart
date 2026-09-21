@@ -1,6 +1,8 @@
 /// 运行时配置缝：LLM 接入与云端开关（架构 14.2 / 16.2）。
 ///
-/// 键值可从环境变量 / flutter_secure_storage 注入，禁止硬编码密钥入库。
+/// [llmApiKey] 是**编译期回退值**（环境变量注入）：运行时的密钥归凭据服务
+/// （flutter_secure_storage）所有，仅在其为空时用这里的值兜底，且不落盘。
+/// [llmBaseUrl] / [llmModel] 由设置页改写并持久化到 shared_preferences。
 class AppConfig {
   const AppConfig({
     this.llmBaseUrl = '',
@@ -9,6 +11,9 @@ class AppConfig {
     this.cloudAsrEnabled = false,
     this.cloudTtsEnabled = false,
     this.localFirst = true,
+    this.neteaseAppId = '',
+    this.neteasePrivateKey = '',
+    this.neteaseApiBaseUrl = '',
   });
 
   /// OpenAI 兼容端点（豆包 / DeepSeek / 其他）。
@@ -23,7 +28,11 @@ class AppConfig {
   /// 完全本地模式：牺牲部分 AI 能力换取隐私。
   final bool localFirst;
 
-  bool get llmConfigured => llmBaseUrl.isNotEmpty && llmApiKey.isNotEmpty;
+  /// 网易云音乐开放平台（个人开发者认证）：appId 非密，privateKey 只经 env
+  /// 注入、不落盘（与 [llmApiKey] 同一口径），apiBaseUrl 不写死在代码里。
+  final String neteaseAppId;
+  final String neteasePrivateKey;
+  final String neteaseApiBaseUrl;
 
   AppConfig copyWith({
     String? llmBaseUrl,

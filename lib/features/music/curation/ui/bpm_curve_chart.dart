@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../domain/music_playlist.dart';
+import '../../domain/music_playlist.dart';
 import 'bpm_curve_painter.dart';
 
 /// BPM 曲线卡片：四阶段平均 BPM 折线 + 阶段标签（架构 6.1）。

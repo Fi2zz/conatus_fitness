@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
+import '../../../di/agent_run.dart';
 import '../data/agent_memory_dao.dart';
 import '../data/profile_dao.dart';
 import '../data/workout_logs_dao.dart';
@@ -25,14 +26,14 @@ import 'validate_risk_report_tool.dart';
 /// 报告落 agent_memory（domain='training', kind='injury_prevention'）。
 class InjuryPreventionAgent {
   InjuryPreventionAgent({
-    required this.llm,
+    required this.ctx,
     required this.logsDao,
     required this.profileDao,
     required this.memoryDao,
     required this.eventLog,
   });
 
-  final LlmProvider llm;
+  final Context ctx;
   final WorkoutLogsDao logsDao;
   final ProfileDao profileDao;
   final AgentMemoryDao memoryDao;
@@ -58,23 +59,22 @@ class InjuryPreventionAgent {
           text: InjuryPreventionPrompt.system,
         ),
       );
-    final loop = AgentLoop(
-      llm: llm,
+    final run = AgentRun.open(
+      ctx,
+      name: 'injury_prevention',
       tools: tools,
-      session: Session(id: 'injury_prevention_${const Uuid().v4()}'),
       systemPrompt: prompt,
-      reflector: Reflector(
-        llm: llm,
-        strategy: ReflectionStrategy.onError,
-        maxRetries: _maxRetries,
-      ),
+      session: Session(id: 'injury_prevention_${const Uuid().v4()}'),
       maxSteps: _maxSteps,
+      maxRetries: _maxRetries,
     );
 
     try {
-      await loop.run(InjuryPreventionPrompt.userBrief);
+      await run.loop.run(InjuryPreventionPrompt.userBrief);
     } on LlmException catch (error) {
       return RetryableError('LLM 调用失败：${error.message}');
+    } finally {
+      run.dispose();
     }
     final report = validate.latestReport;
     if (report == null) {

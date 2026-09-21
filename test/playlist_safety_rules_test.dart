@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:conatus_fitness/core/safety/safety_guard.dart';
-import 'package:conatus_fitness/features/music/agents/playlist_safety_rules.dart';
+import 'package:conatus_fitness/features/music/curation/agents/playlist_safety_rules.dart';
 import 'package:conatus_fitness/features/music/domain/music_playlist.dart';
 
 MusicPlaylist _fixture() => MusicPlaylist(
@@ -67,10 +67,15 @@ void main() {
 
   test('每阶段曲目数超限 → 拦截', () {
     final broken = _fixture();
-    broken.sections[0] = _section(
-      'warmup',
-      const [100, 105, 110, 115, 120, 125, 130],
-    );
+    broken.sections[0] = _section('warmup', const [
+      100,
+      105,
+      110,
+      115,
+      120,
+      125,
+      130,
+    ]);
     final verdict = check(broken);
     expect(verdict, isA<SafetyBlocked>());
     expect((verdict as SafetyBlocked).reason, contains('热身'));
