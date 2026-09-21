@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'features/music/curation/ui/music_page.dart';
 import 'features/music/curation/ui/playlist_detail_page.dart';
 import 'features/music/curation/ui/playlist_setup_page.dart';
+import 'features/music/playback/ui/netease_login_page.dart';
+import 'features/music/playback/ui/playback_overlay.dart';
 import 'features/profile/ui/profile_page.dart';
 import 'features/settings/ui/llm_settings_page.dart';
 import 'features/shell/home_shell.dart';
@@ -38,6 +40,7 @@ abstract final class AppRoutes {
   static const injuryPreventionResult = '/training/injury-prevention-result';
   static const playlistSetup = '/music/curate';
   static const playlistDetail = '/music/playlist';
+  static const neteaseLogin = '/music/netease-login';
   static const llmSettings = '/settings/llm';
 }
 
@@ -55,6 +58,7 @@ class FitnessApp extends StatelessWidget {
       ),
       onGenerateRoute: onGenerateRoute,
       home: const HomeShell(),
+      builder: (context, child) => PlaybackOverlay(child: child),
     );
   }
 
@@ -83,6 +87,7 @@ class FitnessApp extends StatelessWidget {
       AppRoutes.playlistDetail => PlaylistDetailPage(
         playlistId: settings.arguments as String,
       ),
+      AppRoutes.neteaseLogin => const NeteaseLoginPage(),
       AppRoutes.llmSettings => const LlmSettingsPage(),
       _ => null,
     };

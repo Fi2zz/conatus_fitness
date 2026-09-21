@@ -52,6 +52,11 @@ class MusicPlaylist {
   final String notes;
   final List<PlaylistSection> sections;
 
+  /// 全部曲目（按阶段顺序）：播放队列的来源。
+  List<PlaylistTrack> get allTracks => [
+    for (final section in sections) ...section.tracks,
+  ];
+
   Map<String, Object?> toJson() => <String, Object?>{
     'name': name,
     'notes': notes,

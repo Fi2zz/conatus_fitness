@@ -37,7 +37,10 @@ BPM 曲线四阶段（顺序固定）：
 2. 每阶段 2-6 首曲目，曲目 BPM 需贴合阶段区间
 3. energy 取 0.0-1.0，随 BPM 曲线同步起伏
 4. 优先选取广为人知的真实训练向曲目，标注 BPM 须贴近实际
-5. 歌单完成后必须调用 validate_playlist 提交校验；校验通过后按其指示输出
+5. 只写标题与艺人（音源 id / 播放地址由播放链路检索得到，不要编造）
+6. 优先非会员可播的版本：避开 VIP 专享、数字专辑独占、付费才能整首播放的曲目，
+   同一首歌有多个版本时选大众常听的那版
+7. 歌单完成后必须调用 validate_playlist 提交校验；校验通过后按其指示输出
 
 可用工具：
 - music_history：读取用户音乐偏好反馈（跳过/循环/评分）
@@ -46,7 +49,8 @@ BPM 曲线四阶段（顺序固定）：
 输出 Schema：
 $_outputSchema''';
 
-  static String userBrief(CuratorInput input) => '''
+  static String userBrief(CuratorInput input) =>
+      '''
 训练情境：
 - 训练类型：${input.focus}
 - 期望时长：约 ${input.minutes} 分钟

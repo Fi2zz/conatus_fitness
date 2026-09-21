@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app.dart';
 import 'core/config/app_config.dart';
+import 'core/logging/app_log.dart';
 import 'di/app_providers.dart';
 
 void main() {
+  // 全局异常落终端：UI 上看不到的堆栈从此可查（见 AppLog）。
+  AppLog.watchGlobalErrors();
   // 构建期默认值（--dart-define）：设置页改动落 shared_preferences 并优先生效；
   // 密钥同样经构建期注入，禁止硬编码入库。
   const config = AppConfig(

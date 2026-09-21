@@ -1,9 +1,11 @@
 import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
+import '../../../../core/logging/app_log.dart';
 import '../../../../core/tools/tool.dart';
 import '../../../../data/event_log_dao.dart';
 import '../../../../di/agent_run.dart';
+import '../../domain/music_playlist.dart';
 import '../data/music_prefs_dao.dart';
 import '../data/playlists_dao.dart';
 import 'curator_input.dart';
@@ -56,7 +58,8 @@ class CuratorAgent {
 
     try {
       await run.loop.run(CuratorPrompt.userBrief(input));
-    } on LlmException catch (error) {
+    } on LlmException catch (error, stackTrace) {
+      AppLog.error(_source, 'LLM 调用失败', error, stackTrace);
       return RetryableError('LLM 调用失败：${error.message}');
     } finally {
       run.dispose();
@@ -64,9 +67,11 @@ class CuratorAgent {
     final playlist = validate.latestPlaylist;
     if (playlist == null) {
       await _log('playlist_rejected', '最终回复未通过 validate_playlist 校验');
+      AppLog.error(_source, '歌单未通过校验：模型未提交合格的 validate_playlist');
       return const FatalError('生成的歌单未通过校验', suggestion: '请重试，或简化氛围诉求后重试');
     }
     await _log('playlist_generated', '终审结论：${validate.status}');
+    AppLog.info(_source, describePlaylist(playlist));
     final stored = await playlistsDao.save(playlist);
     return Ok(stored);
   }
@@ -76,4 +81,18 @@ class CuratorAgent {
     _source,
     {'kind': kind, 'reason': reason},
   );
+}
+
+/// 歌单产出摘要：终端逐首核对选曲（阶段 BPM 标题 / 艺人）。
+String describePlaylist(MusicPlaylist playlist) {
+  final lines = <String>[
+    '歌单「${playlist.name}」共 ${playlist.allTracks.length} 首',
+  ];
+  for (final section in playlist.sections) {
+    for (final track in section.tracks) {
+      final artist = track.artist ?? '';
+      lines.add('  ${section.stage} ${track.bpm} | ${track.title} / $artist');
+    }
+  }
+  return lines.join('\n');
 }

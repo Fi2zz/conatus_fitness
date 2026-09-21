@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/config/app_config.dart';
+import '../core/logging/app_log.dart';
 import 'app_providers.dart';
 
 /// 持久化键名（snake_case）。
@@ -40,7 +41,8 @@ class AppConfigNotifier extends AsyncNotifier<AppConfig> {
     );
     await prefs.setString(_PrefKeys.llmBaseUrl, baseUrl);
     await prefs.setString(_PrefKeys.llmModel, model);
-    final AppConfig current = state.value ?? ref.read(appConfigDefaultsProvider);
+    final AppConfig current =
+        state.value ?? ref.read(appConfigDefaultsProvider);
     state = AsyncData(current.copyWith(llmBaseUrl: baseUrl, llmModel: model));
   }
 
@@ -48,7 +50,8 @@ class AppConfigNotifier extends AsyncNotifier<AppConfig> {
   Future<SharedPreferences?> _prefs() async {
     try {
       return await ref.watch(sharedPreferencesProvider.future);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      AppLog.warn('app_config', '读盘失败，退回编译期默认配置', error, stackTrace);
       return null;
     }
   }

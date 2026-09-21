@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import '../logging/app_log.dart';
 import 'event_envelope.dart';
 import 'event_subscriber.dart';
 
@@ -96,16 +97,10 @@ class AgentEventBus {
     _dispatching = false;
   }
 
-  void _warnDropped(String message) {
-    assert(() {
-      // ignore: avoid_print
-      print('[AgentEventBus] $message');
-      return true;
-    }());
-  }
+  void _warnDropped(String message) => AppLog.warn('event_bus', message);
 
   void _recordDeadLetter(AppEvent event, Object error) {
     _deadLetters.add((event: event, error: error, at: DateTime.now()));
-    _warnDropped('${event.eventId} 进入死信队列: $error');
+    AppLog.error('event_bus', '${event.eventId} 进入死信队列', error);
   }
 }

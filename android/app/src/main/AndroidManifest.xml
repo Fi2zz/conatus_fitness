@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 音源检索、播放地址与 LLM 调用都需要联网（release 构建不含 debug 清单的权限）。 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="conatus_fitness"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".MainActivity"
             android:exported="true"

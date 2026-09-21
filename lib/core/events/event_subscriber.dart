@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import '../logging/app_log.dart';
 import 'event_envelope.dart';
 
 /// 背压策略（架构 9.1.1）。
@@ -73,7 +74,8 @@ class EventSubscriber {
       try {
         invoke(event);
         _consecutiveFailures = 0;
-      } catch (error) {
+      } catch (error, stackTrace) {
+        AppLog.error('event_bus', '订阅者 [$name] 处理事件失败', error, stackTrace);
         _consecutiveFailures += 1;
         if (_consecutiveFailures >= maxConsecutiveFailures) {
           _consecutiveFailures = 0;

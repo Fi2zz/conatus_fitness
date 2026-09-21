@@ -12,7 +12,4 @@ abstract interface class MusicSource {
 
   /// 解析可播放地址；无版权 / 不可播时返回 null。
   Future<Uri?> streamUrl(TrackRef track);
-
-  /// 释放音源持有的资源（HTTP client / 授权态）。
-  void dispose();
 }

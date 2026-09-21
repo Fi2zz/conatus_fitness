@@ -1,4 +1,5 @@
 import 'package:conatus/conatus.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,10 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>(
 /// 非 autoDispose：服务生命周期与 App 一致，不随监听者增减重建。
 final agentContextProvider = Provider<Context>((ref) {
   final context = Context.root(name: 'conatus_fitness');
+  // 终端日志：注册遥测后，框架埋点（llm.failed / agent.round / tool.result）
+  // 经 debugPrint 打进 flutter run 终端 —— UI 弹窗只留给人看的摘要，
+  // 原始异常与堆栈在终端排障。
+  provideTelemetry(context, telemetry: ConsoleTelemetry(writer: debugPrint));
   ref.onDispose(context.dispose);
   return context;
 });

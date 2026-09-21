@@ -54,6 +54,16 @@ dependencies:
   # 事件 / 记录标识
   uuid: ^4.5.0
 
+  # 开放平台 HTTP 调用与 RSA 签名（网易云音源）
+  http: ^1.2.2
+  crypto: ^3.0.6
+
+  # 网易云登录：App 内打开官方授权网页
+  webview_flutter: ^4.14.0
+
+  # 音频播放（音乐轨；架构 12.4）
+  just_audio: ^0.10.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

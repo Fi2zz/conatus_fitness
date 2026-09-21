@@ -1,6 +1,7 @@
 import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
+import '../../../core/logging/app_log.dart';
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
@@ -51,7 +52,8 @@ class PlannerAgent {
 
     try {
       await run.loop.run(PlannerPrompt.userBrief(input));
-    } on LlmException catch (error) {
+    } on LlmException catch (error, stackTrace) {
+      AppLog.error(_source, 'LLM 调用失败', error, stackTrace);
       return RetryableError('LLM 调用失败：${error.message}');
     } finally {
       run.dispose();
@@ -59,6 +61,7 @@ class PlannerAgent {
     final plan = validate.latestPlan;
     if (plan == null) {
       await _log('plan_rejected', '最终回复未通过 validate_plan 校验');
+      AppLog.error(_source, '生成的计划未通过校验：模型未提交合格的 validate_plan');
       return const FatalError('生成的计划未通过校验', suggestion: '请重试，或简化需求后重试');
     }
     final stored = await plansDao.save(

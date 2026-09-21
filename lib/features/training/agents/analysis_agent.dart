@@ -1,6 +1,7 @@
 import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
+import '../../../core/logging/app_log.dart';
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
@@ -60,7 +61,8 @@ class AnalysisAgent {
       turn = await run.loop.run(
         AnalysisPrompt.userBrief(await _previousConclusion()),
       );
-    } on LlmException catch (error) {
+    } on LlmException catch (error, stackTrace) {
+      AppLog.error(_source, 'LLM 调用失败', error, stackTrace);
       return RetryableError('LLM 调用失败：${error.message}');
     } finally {
       run.dispose();
@@ -68,6 +70,7 @@ class AnalysisAgent {
     final reply = turn.reply.trim();
     if (reply.isEmpty) {
       await _log('analysis_empty', '最终回复为空');
+      AppLog.error(_source, '未能生成分析结论：模型最终回复为空');
       return const FatalError('未能生成分析结论', suggestion: '请重试，或先录入训练记录');
     }
     await memoryDao.save(domain: 'training', kind: 'analysis', content: reply);

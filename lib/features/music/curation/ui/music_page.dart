@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app.dart';
 import '../../../../di/llm_providers.dart';
 import '../../../common/domain_placeholder.dart';
+import '../../playback/netease/netease_providers.dart';
+import '../../playback/ui/netease_account_bar.dart';
 import '../providers.dart';
 import 'playlist_row.dart';
 
@@ -28,9 +30,22 @@ class MusicPage extends ConsumerWidget {
       navigationBar: CupertinoNavigationBar(
         middle: const Text('音乐'),
         automaticallyImplyLeading: false,
-        trailing: status == LlmStatus.ready ? _addAction(context) : null,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (status == LlmStatus.ready) _addAction(context),
+            _loginAction(context, ref),
+          ],
+        ),
       ),
-      child: SafeArea(child: body),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const NeteaseAccountBar(),
+            Expanded(child: body),
+          ],
+        ),
+      ),
     );
   }
 
@@ -39,6 +54,18 @@ class MusicPage extends ConsumerWidget {
       padding: EdgeInsets.zero,
       onPressed: () => Navigator.of(context).pushNamed(AppRoutes.playlistSetup),
       child: const Icon(CupertinoIcons.add_circled),
+    );
+  }
+
+  /// 网易云登录入口：未登录显示文字，已登录显示头像图标（点了可重新登录）。
+  Widget _loginAction(BuildContext context, WidgetRef ref) {
+    final loggedIn = ref.watch(neteaseLoggedInProvider).value ?? false;
+    return CupertinoButton(
+      padding: EdgeInsets.only(left: 12),
+      onPressed: () => Navigator.of(context).pushNamed(AppRoutes.neteaseLogin),
+      child: loggedIn
+          ? const Icon(CupertinoIcons.person_circle)
+          : const Text('登录'),
     );
   }
 

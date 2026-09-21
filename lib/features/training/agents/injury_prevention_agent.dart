@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:conatus/conatus.dart' hide ToolResult;
 import 'package:uuid/uuid.dart';
 
+import '../../../core/logging/app_log.dart';
 import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
@@ -71,7 +72,8 @@ class InjuryPreventionAgent {
 
     try {
       await run.loop.run(InjuryPreventionPrompt.userBrief);
-    } on LlmException catch (error) {
+    } on LlmException catch (error, stackTrace) {
+      AppLog.error(_source, 'LLM 调用失败', error, stackTrace);
       return RetryableError('LLM 调用失败：${error.message}');
     } finally {
       run.dispose();
@@ -79,6 +81,7 @@ class InjuryPreventionAgent {
     final report = validate.latestReport;
     if (report == null) {
       await _log('report_rejected', '最终回复未通过 validate_risk_report 校验');
+      AppLog.error(_source, '风险报告未通过校验：模型未提交合格的 validate_risk_report');
       return const FatalError('生成的风险报告未通过校验', suggestion: '请重试，或简化需求后重试');
     }
     await memoryDao.save(

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 网易云下发的播放地址是 http 明文（*.music.126.net），而 Android 9+ 默认
+     禁止 cleartext；这里只对这些域名放行，其余仍强制 HTTPS。
+     127.0.0.1 是 just_audio 本机代理所需（headers / 缓存类音源会用到）。 -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">music.126.net</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
