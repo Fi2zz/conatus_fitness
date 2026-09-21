@@ -37,6 +37,7 @@ dependencies:
   conatus:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
 
   # 状态管理
   flutter_riverpod: ^3.0.0
@@ -80,90 +81,132 @@ dependency_overrides:
   conatus_agent:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_agent
   conatus_alerting:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_alerting
   conatus_asr:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_asr
   conatus_browser_use:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_browser_use
+  conatus_coding:
+    git:
+      url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
+      path: packages/conatus_coding
   conatus_compaction:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_compaction
   conatus_computer_use:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_computer_use
   conatus_core:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_core
   conatus_credentials:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_credentials
   conatus_cron:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_cron
   conatus_foundation:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_foundation
+  conatus_fs_tools:
+    git:
+      url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
+      path: packages/conatus_fs_tools
   conatus_intent:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_intent
   conatus_llm:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_llm
   conatus_mcp:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_mcp
   conatus_observability:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_observability
+  conatus_ontology:
+    git:
+      url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
+      path: packages/conatus_ontology
+  conatus_providers:
+    git:
+      url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
+      path: packages/conatus_providers
   conatus_schedule:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_schedule
   conatus_search:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_search
   conatus_skill:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_skill
   conatus_tasks:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_tasks
   conatus_team:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_team
   conatus_tts:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_tts
   conatus_tui:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_tui
   conatus_workflow:
     git:
       url: https://gitee.com/fitzy/conatus.git
+      ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_workflow
 
 # For information on the generic Dart part of this file, see the

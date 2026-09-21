@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../di/app_config_notifier.dart';
-import '../../../di/credentials_providers.dart';
+import 'llm_connection_test.dart';
+import 'llm_settings_actions.dart';
 import 'settings_text_field.dart';
 
 /// 模型接入设置页：Base URL / 模型落 shared_preferences，API Key 落安全存储。
-///
-/// 保存后无需重启：Base URL 与模型触发 LLM 服务重建，API Key 由凭据服务就地轮换。
+/// 保存后即时生效：URL 与模型触发服务重建，Key 由凭据服务就地轮换。
 class LlmSettingsPage extends ConsumerStatefulWidget {
   const LlmSettingsPage({super.key});
 
@@ -27,12 +26,11 @@ class _LlmSettingsPageState extends ConsumerState<LlmSettingsPage> {
   }
 
   Future<void> _load() async {
-    final config = await ref.read(appConfigProvider.future);
-    final creds = await ref.read(credentialsProvider.future);
+    final settings = await loadLlmSettings(ref);
     if (!mounted) return;
-    _baseUrl.text = config.llmBaseUrl;
-    _model.text = config.llmModel;
-    _apiKey.text = creds.get(kArkApiKey)?.value ?? '';
+    _baseUrl.text = settings.baseUrl;
+    _model.text = settings.model;
+    _apiKey.text = settings.apiKey;
   }
 
   @override
@@ -52,11 +50,7 @@ class _LlmSettingsPageState extends ConsumerState<LlmSettingsPage> {
           padding: const EdgeInsets.all(16),
           children: [
             const Text(
-              '模型接入',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            const Text(
-              'Base URL 与模型保存后即时生效；API Key 只存本机安全存储，不进日志',
+              '普通 API Key 配 /api/v3，套餐 Key 配 /api/plan/v3；Key 只存本机安全存储',
               style: TextStyle(color: CupertinoColors.secondaryLabel),
             ),
             const SizedBox(height: 12),
@@ -77,6 +71,12 @@ class _LlmSettingsPageState extends ConsumerState<LlmSettingsPage> {
               obscure: true,
             ),
             const SizedBox(height: 24),
+            LlmConnectionTest(
+              baseUrl: _baseUrl,
+              model: _model,
+              apiKey: _apiKey,
+            ),
+            const SizedBox(height: 8),
             CupertinoButton.filled(onPressed: _save, child: const Text('保存')),
           ],
         ),
@@ -86,12 +86,12 @@ class _LlmSettingsPageState extends ConsumerState<LlmSettingsPage> {
 
   /// 保存：清空 API Key 即删除本机密钥（编译期回退值仍可兜底）。
   Future<void> _save() async {
-    await ref
-        .read(appConfigProvider.notifier)
-        .saveLlm(baseUrl: _baseUrl.text.trim(), model: _model.text.trim());
-    final creds = await ref.read(credentialsProvider.future);
-    await creds.update(kArkApiKey, _apiKey.text.trim());
-    if (!mounted) return;
-    Navigator.of(context, rootNavigator: true).pop(); // 返回即已保存
+    await saveLlmSettings(
+      ref,
+      baseUrl: _baseUrl.text.trim(),
+      model: _model.text.trim(),
+      apiKey: _apiKey.text.trim(),
+    );
+    if (mounted) Navigator.of(context, rootNavigator: true).pop();
   }
 }

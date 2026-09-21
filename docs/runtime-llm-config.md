@@ -20,7 +20,10 @@
 | `apiKey`            | `apiKey` 非 final + `credentials.changes` 订阅 | `Credentials.update()`                  | **否**，就地轮换   |
 | `baseUrl` / `model` | `final`                                        | 换 `DoubaoProvider` 实例 → ctx 重新注册 | 是（重建安全兜底） |
 
-`appConfigDefaultsProvider.llmApiKey` 是**编译期回退值**：仅当安全存储里没有该键时兜底，且不落盘。
+`appConfigDefaultsProvider` 里的三把 Key（`llmApiKey` / `llmAgentPlanApiKey` /
+`llmCodingPlanApiKey`）都是**编译期回退值**：仅当安全存储里没有对应键时兜底，
+且不落盘。凭据键按 `baseUrl` 选（见 `core/config/llm_endpoints.dart`）：方舟的
+Plan 端点只认订阅后生成的专属 Key，拿普通 Key 打 Plan 端点会得到 401。
 
 **ADR 提案**（待并入 architecture.md 20.2）
 
@@ -37,7 +40,7 @@
   ├─ model / baseUrl ──► AppConfigNotifier（shared_preferences）
   │                        └─► llmServiceProvider（select: baseUrl, model）
   │                              └─► provideLlm(ctx) ──► ctx 'llm'
-  └─ apiKey ───────────► Credentials.update('ARK_API_KEY', v)
+  └─ apiKey ───────────► Credentials.update(llmCredentialKey(baseUrl), v)
                            └─► credentials.changes ──► DoubaoProvider.apiKey（就地）
 
 AgentRun.open(ctx) ──► provideAgentLoop ──► 每次运行现取 ctx 'llm'

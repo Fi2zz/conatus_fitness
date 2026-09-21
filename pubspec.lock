@@ -85,8 +85,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -94,8 +94,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_agent"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -103,8 +103,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_alerting"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -112,8 +112,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_asr"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -121,8 +121,17 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_browser_use"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      url: "https://gitee.com/fitzy/conatus.git"
+    source: git
+    version: "0.16.0"
+  conatus_coding:
+    dependency: "direct overridden"
+    description:
+      path: "packages/conatus_coding"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -130,8 +139,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_compaction"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -139,8 +148,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_computer_use"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -148,8 +157,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_core"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -157,8 +166,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_credentials"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -166,8 +175,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_cron"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -175,8 +184,17 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_foundation"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      url: "https://gitee.com/fitzy/conatus.git"
+    source: git
+    version: "0.16.0"
+  conatus_fs_tools:
+    dependency: "direct overridden"
+    description:
+      path: "packages/conatus_fs_tools"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -184,8 +202,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_intent"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -193,8 +211,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_llm"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -202,8 +220,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_mcp"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -211,8 +229,26 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_observability"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      url: "https://gitee.com/fitzy/conatus.git"
+    source: git
+    version: "0.16.0"
+  conatus_ontology:
+    dependency: "direct overridden"
+    description:
+      path: "packages/conatus_ontology"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      url: "https://gitee.com/fitzy/conatus.git"
+    source: git
+    version: "0.16.0"
+  conatus_providers:
+    dependency: "direct overridden"
+    description:
+      path: "packages/conatus_providers"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -220,8 +256,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_schedule"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -229,8 +265,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_search"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -238,8 +274,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_skill"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -247,8 +283,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_tasks"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -256,8 +292,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_team"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -265,8 +301,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_tts"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -274,8 +310,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_tui"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -283,8 +319,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/conatus_workflow"
-      ref: HEAD
-      resolved-ref: "02bbd0abb72354604979c35374ccf5f81c7bd3c6"
+      ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
+      resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       url: "https://gitee.com/fitzy/conatus.git"
     source: git
     version: "0.16.0"
@@ -439,6 +475,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  glob:
+    dependency: transitive
+    description:
+      name: glob
+      sha256: "218aeb56050c714f62a3182775320dfa04602b55074873e24e31bbd39bda96fb"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.0"
   hooks:
     dependency: transitive
     description:

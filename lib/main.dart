@@ -17,6 +17,8 @@ void main() {
       defaultValue: 'https://ark.cn-beijing.volces.com/api/plan/v3',
     ),
     llmApiKey: String.fromEnvironment('ARK_API_KEY'),
+    llmAgentPlanApiKey: String.fromEnvironment('ARK_AGENT_PLAN_API_KEY'),
+    llmCodingPlanApiKey: String.fromEnvironment('ARK_CODING_PLAN_API_KEY'),
     llmModel: String.fromEnvironment(
       'ARK_MODEL',
       defaultValue: 'doubao-seed-2.0-mini',

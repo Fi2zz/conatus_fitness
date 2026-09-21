@@ -1,6 +1,8 @@
 import 'package:conatus/conatus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/config/llm_endpoints.dart';
+import '../core/logging/app_log.dart';
 import 'app_config_notifier.dart';
 import 'app_providers.dart';
 import 'credentials_providers.dart';
@@ -33,11 +35,21 @@ final llmServiceProvider = Provider<LlmProvider?>((ref) {
   if (loading || keyLoading) return null;
   if (baseUrl.isEmpty || !ref.watch(apiKeyReadyProvider)) return null;
   final Context context = ref.watch(agentContextProvider);
+  final Credentials creds = ref.watch(credentialsProvider).requireValue;
+  // 凭据键按端点选：Plan 端点只认专属 Key（见 llm_endpoints.dart）。
+  final credentialKey = llmCredentialKey(baseUrl);
+  // 装配即落一行脱敏配置：认证失败时先确认「用的哪份 key、打到哪个端点」。
+  AppLog.info(
+    'llm',
+    '服务装配 baseUrl=$baseUrl｜model=${model.isEmpty ? '(框架默认)' : model}'
+        '｜key=$credentialKey(${_keyShape(creds, credentialKey)})',
+  );
   final llm = FallbackLlm([
     DoubaoProvider(
       baseUrl: baseUrl,
       model: model.isEmpty ? null : model,
-      credentials: ref.watch(credentialsProvider).requireValue,
+      credentials: creds,
+      credentialKey: credentialKey,
     ),
   ]);
   final disposer = provideLlm(context, llm: llm);
@@ -47,6 +59,13 @@ final llmServiceProvider = Provider<LlmProvider?>((ref) {
   });
   return context.require<LlmProvider>('llm');
 });
+
+/// 密钥形态（不打印值）：长度 + 是否 ARK 前缀，够定位「key 没生效 / 填错」。
+String _keyShape(Credentials creds, String keyName) {
+  final value = creds.get(keyName)?.value ?? '';
+  if (value.isEmpty) return '缺失';
+  return 'len=${value.length}, ark前缀=${value.startsWith('ark-')}';
+}
 
 /// LLM 可用状态：UI 引导态与 Agent 装配的唯一判定入口。
 ///
