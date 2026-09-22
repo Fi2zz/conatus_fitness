@@ -71,7 +71,7 @@ packages:
       path: "."
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_agent:
@@ -80,7 +80,7 @@ packages:
       path: "packages/conatus_agent"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_asr:
@@ -89,7 +89,7 @@ packages:
       path: "packages/conatus_asr"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_compaction:
@@ -98,7 +98,7 @@ packages:
       path: "packages/conatus_compaction"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_core:
@@ -107,7 +107,7 @@ packages:
       path: "packages/conatus_core"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_credentials:
@@ -116,7 +116,7 @@ packages:
       path: "packages/conatus_credentials"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_cron:
@@ -125,7 +125,7 @@ packages:
       path: "packages/conatus_cron"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_foundation:
@@ -134,7 +134,7 @@ packages:
       path: "packages/conatus_foundation"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_fs_tools:
@@ -143,7 +143,7 @@ packages:
       path: "packages/conatus_fs_tools"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_llm:
@@ -152,7 +152,7 @@ packages:
       path: "packages/conatus_llm"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_mcp:
@@ -161,7 +161,7 @@ packages:
       path: "packages/conatus_mcp"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_providers:
@@ -170,7 +170,7 @@ packages:
       path: "packages/conatus_providers"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_schedule:
@@ -179,7 +179,7 @@ packages:
       path: "packages/conatus_schedule"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_search:
@@ -188,7 +188,7 @@ packages:
       path: "packages/conatus_search"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_skill:
@@ -197,7 +197,7 @@ packages:
       path: "packages/conatus_skill"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_tasks:
@@ -206,7 +206,7 @@ packages:
       path: "packages/conatus_tasks"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   conatus_tts:
@@ -215,7 +215,7 @@ packages:
       path: "packages/conatus_tts"
       ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
       resolved-ref: "5de94003f1a5fff82f31a5a1408411156fe35e11"
-      url: "https://gitee.com/fitzy/conatus.git"
+      url: "https://github.com/Fi2zz/conatus.git"
     source: git
     version: "0.16.0"
   crypto:

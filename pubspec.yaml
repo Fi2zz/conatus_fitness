@@ -33,10 +33,11 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  # Agent 框架（伞包；https://gitee.com/fitzy/conatus）
+  # Agent 框架（伞包；原始仓库 https://github.com/Fi2zz/conatus，
+  # 国内不可达时 `make deps` 会自动回退到 gitee mirror）
   conatus:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
 
   # 状态管理
@@ -77,86 +78,87 @@ dev_dependencies:
 
 # pub 的 workspace 只对 root 生效，外部包消费不了 conatus monorepo；
 # 成员包未发布到 pub.dev，这里把伞包 conatus 实际传递依赖到的 16 个成员
-# 钉到同一 gitee 仓库的子路径（伞包 dev_dependencies 里的成员消费者解析不到，无需 override）。
+# 钉到同一 git 仓库的子路径（伞包 dev_dependencies 里的成员消费者解析不到，无需 override）。
+# mirror 回退由 tool/deps.sh 自动处理，这里保持原始地址。
 dependency_overrides:
   conatus_agent:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_agent
   conatus_asr:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_asr
   conatus_compaction:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_compaction
   conatus_core:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_core
   conatus_credentials:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_credentials
   conatus_cron:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_cron
   conatus_foundation:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_foundation
   conatus_fs_tools:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_fs_tools
   conatus_llm:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_llm
   conatus_mcp:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_mcp
   conatus_providers:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_providers
   conatus_schedule:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_schedule
   conatus_search:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_search
   conatus_skill:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_skill
   conatus_tasks:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_tasks
   conatus_tts:
     git:
-      url: https://gitee.com/fitzy/conatus.git
+      url: https://github.com/Fi2zz/conatus.git
       ref: 5de94003f1a5fff82f31a5a1408411156fe35e11
       path: packages/conatus_tts
 

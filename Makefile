@@ -19,8 +19,8 @@ help: ## 显示可用命令
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
-deps: ## 拉取依赖
-	flutter pub get
+deps: ## 拉取依赖（原始仓库不可达时自动回退 mirror）
+	@./tool/deps.sh
 
 devices: ## 列出可用设备
 	flutter devices
@@ -58,7 +58,7 @@ build-ios: ## 构建 iOS（release，不签名）
 	flutter build ios --release --no-codesign $(DART_DEFINES)
 
 upgrade: ## 升级依赖到最新兼容版本
-	flutter pub upgrade
+	@./tool/deps.sh upgrade
 
 outdated: ## 查看可升级依赖
 	flutter pub outdated
