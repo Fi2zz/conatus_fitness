@@ -1,8 +1,8 @@
-import 'package:conatus/conatus.dart' hide ToolResult;
+import 'package:conatus/conatus.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/agents/agent_outcome.dart';
 import '../../../core/logging/app_log.dart';
-import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
 import '../data/agent_memory_dao.dart';
@@ -37,7 +37,7 @@ class AnalysisAgent {
   static const _maxRetries = 2;
   static const _source = 'analysis_agent';
 
-  Future<ToolResult<String>> analyze() async {
+  Future<AgentOutcome<String>> analyze() async {
     final tools = ToolRegistry()
       ..register(WorkoutLogQueryTool(logsDao))
       ..register(ProgressAnalysisTool(logsDao))

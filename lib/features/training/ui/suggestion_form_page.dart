@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app.dart';
-import '../../../core/tools/tool.dart';
+import '../../../core/agents/agent_outcome.dart';
 import '../../common/app_dialogs.dart';
 import '../agent_providers.dart';
 import '../agents/suggestion_input.dart';

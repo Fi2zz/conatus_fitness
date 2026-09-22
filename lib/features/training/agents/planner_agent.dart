@@ -1,8 +1,8 @@
-import 'package:conatus/conatus.dart' hide ToolResult;
+import 'package:conatus/conatus.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/agents/agent_outcome.dart';
 import '../../../core/logging/app_log.dart';
-import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
 import '../data/plans_dao.dart';
@@ -32,7 +32,7 @@ class PlannerAgent {
   static const _maxRetries = 2; // 校验失败反思重试上限（架构 5.1：≤ 2）
   static const _source = 'planner_agent';
 
-  Future<ToolResult<StoredPlan>> generate(PlannerInput input) async {
+  Future<AgentOutcome<StoredPlan>> generate(PlannerInput input) async {
     final tools = ToolRegistry();
     final validate = ValidatePlanTool(input.injuries);
     tools.register(InjuryCheckTool(input.injuries));

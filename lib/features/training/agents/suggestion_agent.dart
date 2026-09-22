@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:conatus/conatus.dart' hide ToolResult;
+import 'package:conatus/conatus.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/agents/agent_outcome.dart';
 import '../../../core/logging/app_log.dart';
-import '../../../core/tools/tool.dart';
 import '../../../data/event_log_dao.dart';
 import '../../../di/agent_run.dart';
 import '../data/agent_memory_dao.dart';
@@ -40,7 +40,9 @@ class SuggestionAgent {
   static const _source = 'suggestion_agent';
   static const _historyDays = 14;
 
-  Future<ToolResult<TrainingSuggestion>> suggest(SuggestionInput input) async {
+  Future<AgentOutcome<TrainingSuggestion>> suggest(
+    SuggestionInput input,
+  ) async {
     final validate = ValidateSuggestionTool(
       recoveryScore: input.recoveryScore,
       painReported: input.painReported,

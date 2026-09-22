@@ -1,8 +1,8 @@
-import 'package:conatus/conatus.dart' hide ToolResult;
+import 'package:conatus/conatus.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../core/agents/agent_outcome.dart';
 import '../../../../core/logging/app_log.dart';
-import '../../../../core/tools/tool.dart';
 import '../../../../data/event_log_dao.dart';
 import '../../../../di/agent_run.dart';
 import '../../domain/music_playlist.dart';
@@ -36,7 +36,7 @@ class CuratorAgent {
   static const _maxRetries = 2; // 校验失败反思重试上限
   static const _source = 'music_curator_agent';
 
-  Future<ToolResult<StoredPlaylist>> generate(CuratorInput input) async {
+  Future<AgentOutcome<StoredPlaylist>> generate(CuratorInput input) async {
     final tools = ToolRegistry();
     final validate = ValidatePlaylistTool();
     tools.register(MusicHistoryTool(prefsDao));
