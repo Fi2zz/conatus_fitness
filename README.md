@@ -1,5 +1,7 @@
 # Conatus Fitness
 
+> **Demo**：本项目是基于 [Conatus](https://github.com/Fi2zz/conatus) Agent 框架构建的上层示例应用，用于演示框架在真实业务场景（健身训练伴侣）中的落地方式。
+
 > 一款把 AI Agent 放在核心位置（而非当外挂功能）的健身训练伴侣 App。
 > 目标：训练全程不用碰手机 —— AI 排计划、语音记录、音乐自动跟随、练后自动分析。
 
@@ -75,7 +77,7 @@ Agent Coordinator + EventBus（双向广播，领域平级）
 ## 技术栈
 
 - **客户端**：Flutter + Cupertino（iOS 风格），状态管理 Riverpod，路由走 `onGenerateRoute`
-- **Agent 框架**：Conatus（Gitee git 依赖，伞包 + 成员包按子路径钉版本）
+- **Agent 框架**：Conatus（git 依赖，原始仓库在 GitHub、不可达时自动回退 Gitee 镜像，伞包 + 成员包按子路径钉版本）
 - **LLM**：兼容 OpenAI 协议的端点（火山方舟普通 / Agent Plan / Coding Plan 端点各自独立凭据）
 - **存储**：sqflite（本地库）、shared_preferences（非密配置）、flutter_secure_storage（密钥）
 - **音频**：just_audio（播放）、webview_flutter（授权登录）
@@ -83,7 +85,7 @@ Agent Coordinator + EventBus（双向广播，领域平级）
 ## 快速开始
 
 ```bash
-make deps          # 拉取依赖
+make deps          # 拉取依赖（原始仓库不可达时自动回退镜像）
 make devices       # 查看可用设备
 make run           # 运行到默认设备（DEVICE=<id> 指定设备）
 make check         # 提交前：静态分析 + 测试
@@ -94,6 +96,18 @@ make check         # 提交前：静态分析 + 测试
 首次使用需在 `我的 → 模型接入` 填 Base URL 与 API Key，训练域与音乐域才会解锁（未配置时展示引导态）。
 
 更多命令见 `make help`。
+
+### 依赖来源：原始仓库优先，镜像自动兜底
+
+Conatus 框架的原始仓库在 GitHub（[Fi2zz/conatus](https://github.com/Fi2zz/conatus)），国内直连时常不可达，拉依赖会卡住或失败；但若把依赖直接写成 Gitee 镜像地址，又会丢掉「代码实际出处」，镜像同步滞后时也不易察觉。
+
+所以 `make deps` 取了个折中，而不是二选一：
+
+- `pubspec.yaml` **始终写原始地址**，入库内容与网络环境无关；
+- 拉依赖前先探测原始仓库的 git 端点：可达就直接用，不可达才写入一条**仓库级** git 规则（`url.<镜像>.insteadOf=<原始地址>`），由 git 在传输层把地址改写到 Gitee 镜像 —— 不改动任何入库文件，原始地址恢复可达后该规则会被自动清除；
+- 镜像为导入式同步，两边 **commit SHA 完全一致**，因此 `ref` 不需要任何映射；反过来，若镜像历史分叉，pub 会在拉取阶段报「找不到该 ref」而失败，不会静默拿到错误版本。
+
+`make upgrade` 同样走这个入口，实现见 [`tool/deps.sh`](tool/deps.sh)。
 
 ## 使用示例
 
