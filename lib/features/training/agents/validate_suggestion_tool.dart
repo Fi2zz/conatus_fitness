@@ -5,6 +5,7 @@ import 'package:conatus/conatus.dart';
 import '../../../core/safety/safety_guard.dart';
 import '../domain/training_suggestion.dart';
 import '../domain/training_suggestion_codec.dart';
+import 'suggestion_output_schema.dart';
 import 'suggestion_safety_rules.dart';
 
 /// 建议提交校验工具：结构校验 + SafetyGuard 终审（架构 14.3.1）。
@@ -12,7 +13,10 @@ import 'suggestion_safety_rules.dart';
 /// 校验失败返回结构化失败（触发 reflectAndRetry 反思重试）；
 /// 通过/改写后持有 [TrainingSuggestion]，由 SuggestionAgent 落库。
 class ValidateSuggestionTool extends Tool {
-  ValidateSuggestionTool({required this.recoveryScore, required this.painReported});
+  ValidateSuggestionTool({
+    required this.recoveryScore,
+    required this.painReported,
+  });
 
   static const toolName = 'validate_suggestion';
 
@@ -27,19 +31,19 @@ class ValidateSuggestionTool extends Tool {
 
   @override
   String get description =>
-      '提交训练建议 JSON 做结构校验与安全终审。完成建议后必须调用；'
-      '校验通过后，把返回的 JSON 原样作为最终回复输出，不要附加任何文字。';
+      '提交训练建议做结构校验与安全终审（建议字段结构即本工具参数）。'
+      '完成建议后必须调用；校验通过后，把返回的 JSON 原样作为最终回复输出，'
+      '不要附加任何文字。';
 
   @override
-  List<ParamSpec> get params => <ParamSpec>[
-        ParamSpec.string('suggestion_json', description: '完整的训练建议 JSON', required: true),
-      ];
+  List<ParamSpec> get params => suggestionOutputParams();
 
   @override
   Future<ToolResult> call(ToolContext context) async {
-    final suggestion = TrainingSuggestionCodec.tryParse(context.str('suggestion_json'));
+    final suggestion = TrainingSuggestionCodec.tryParseMap(context.arguments);
     if (suggestion == null) {
-      const message = '建议未通过 JSON 结构校验：suggestion_type 必须是 '
+      const message =
+          '建议未通过 JSON 结构校验：suggestion_type 必须是 '
           'increase_load/maintain/deload/rest 之一，reasoning 不能为空';
       return ToolResult.failure(
         message,
@@ -70,7 +74,8 @@ class ValidateSuggestionTool extends Tool {
         latestSuggestion = suggestion;
         status = 'passed';
         return ToolResult.success(
-          '校验通过。最终回复请原样输出该建议 JSON，不要附加文字',
+          '校验通过。最终回复请原样输出该 JSON，不要附加文字：'
+          '${jsonEncode(TrainingSuggestionCodec.toJson(suggestion))}',
           value: suggestion,
         );
     }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:conatus/conatus.dart' show ToolCall, ToolContext, ToolResult;
@@ -32,7 +34,7 @@ Future<ToolResult> submit(ValidatePlaylistTool tool, String json) => tool.call(
   ToolContext(
     ToolCall(
       name: ValidatePlaylistTool.toolName,
-      arguments: {'playlist_json': json},
+      arguments: jsonDecode(json) as Map<String, Object?>,
     ),
   ),
 );
@@ -75,10 +77,23 @@ void main() {
     expect(tool.latestPlaylist, isNull);
   });
 
-  test('非 JSON 文本 → 失败', () async {
+  test('参数缺失 → playlist_invalid 失败', () async {
     final tool = ValidatePlaylistTool();
-    final result = await submit(tool, '这个歌单没问题的');
+    final result = await submit(tool, '{}');
     expect(result.isError, isTrue);
     expect(result.error?.code, 'playlist_invalid');
+  });
+
+  test('歌单结构由工具参数下发（不再写进系统提示词）', () {
+    final parameters = ValidatePlaylistTool().toSchema()['parameters'] as Map;
+    final properties = parameters['properties'] as Map;
+    expect(properties.keys, containsAll(<String>['name', 'notes', 'sections']));
+    expect(parameters['required'], containsAll(<String>['name', 'sections']));
+    final section = (properties['sections'] as Map)['items'] as Map;
+    final track = ((section['properties'] as Map)['tracks'] as Map)['items'];
+    expect(
+      (track['properties'] as Map).keys,
+      containsAll(<String>['title', 'artist', 'bpm', 'energy', 'reason']),
+    );
   });
 }

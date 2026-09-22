@@ -12,6 +12,11 @@ abstract final class InjuryRiskReportCodec {
       return null;
     }
     if (decoded is! Map<String, Object?>) return null;
+    return tryParseMap(decoded);
+  }
+
+  /// 解析已结构化的报告对象（function calling 的工具参数即此形态）。
+  static InjuryRiskReport? tryParseMap(Map<String, Object?> decoded) {
     final level = decoded['risk_level'];
     final areas = _strings(decoded['risk_areas']);
     final actions = _strings(decoded['preventive_actions']);

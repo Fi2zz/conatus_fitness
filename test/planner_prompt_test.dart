@@ -4,13 +4,13 @@ import 'package:conatus_fitness/features/training/agents/planner_input.dart';
 import 'package:conatus_fitness/features/training/agents/planner_prompt.dart';
 
 void main() {
-  test('system prompt 含约束、工具说明与输出 Schema', () {
+  test('system prompt 含约束与工具说明，不再含输出 Schema', () {
     final prompt = PlannerPrompt.system();
     expect(prompt, contains('伤病史相关动作必须替换或加注 safety_note'));
     expect(prompt, contains('injury_check'));
     expect(prompt, contains('validate_plan'));
-    expect(prompt, contains('week_number'));
-    expect(prompt, contains('target_rpe'));
+    expect(prompt, isNot(contains('week_number')));
+    expect(prompt, isNot(contains('target_rpe')));
   });
 
   test('userBrief 渲染全部画像字段', () {

@@ -2,27 +2,6 @@ import 'curator_input.dart';
 
 /// 歌单策展 Prompt（架构 6.1 + 13）。
 abstract final class CuratorPrompt {
-  static const _outputSchema = '''
-{
-  "name": "歌单名",
-  "notes": "整体策展思路",
-  "sections": [
-    {
-      "stage": "warmup",
-      "mood": "阶段氛围",
-      "tracks": [
-        {
-          "title": "曲名",
-          "artist": "艺人",
-          "bpm": 110,
-          "energy": 0.6,
-          "reason": "选曲理由"
-        }
-      ]
-    }
-  ]
-}''';
-
   static String system() => '''
 你是专业训练音乐策展人。根据训练情境生成带 BPM 曲线的训练歌单。
 
@@ -41,14 +20,12 @@ BPM 曲线四阶段（顺序固定）：
 6. 只选开放平台能播的曲目：优先华语 / 内地主流曲目，避开欧美大厂牌
    （环球 / 索尼 / 华纳）版权曲与数字专辑独占曲目 —— 实测这些在开放平台
    拿不到播放地址；同一首歌有多个版本时，选大众常听的那版
-7. 歌单完成后必须调用 validate_playlist 提交校验；校验通过后按其指示输出
+7. 歌单完成后必须调用 validate_playlist 提交校验；歌单的字段结构见该工具的
+   参数声明，校验通过后按其指示输出
 
 可用工具：
 - music_history：读取用户音乐偏好反馈（跳过/循环/评分）
-- validate_playlist：提交完整歌单 JSON 做结构校验与安全终审
-
-输出 Schema：
-$_outputSchema''';
+- validate_playlist：提交训练歌单做结构校验与安全终审''';
 
   static String userBrief(CuratorInput input) =>
       '''

@@ -12,6 +12,11 @@ abstract final class TrainingSuggestionCodec {
       return null;
     }
     if (decoded is! Map<String, Object?>) return null;
+    return tryParseMap(decoded);
+  }
+
+  /// 解析已结构化的建议对象（function calling 的工具参数即此形态）。
+  static TrainingSuggestion? tryParseMap(Map<String, Object?> decoded) {
     final type = decoded['suggestion_type'];
     final reasoning = decoded['reasoning'];
     if (type is! String || !TrainingSuggestion.types.contains(type)) return null;

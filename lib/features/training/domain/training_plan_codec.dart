@@ -9,6 +9,11 @@ abstract final class TrainingPlanCodec {
   static TrainingPlan? tryParse(String raw) {
     final root = _decode(raw);
     if (root == null) return null;
+    return tryParseMap(root);
+  }
+
+  /// 解析已结构化的计划对象（function calling 的工具参数即此形态）。
+  static TrainingPlan? tryParseMap(Map<String, Object?> root) {
     final weeks = _parseWeeks(root['weeks']);
     if (weeks == null) return null;
     return TrainingPlan(

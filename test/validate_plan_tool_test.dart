@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:conatus/conatus.dart' show ToolCall, ToolContext, ToolResult;
@@ -14,7 +16,10 @@ const validPlan = '''
 
 Future<ToolResult> submit(ValidatePlanTool tool, String json) => tool.call(
   ToolContext(
-    ToolCall(name: ValidatePlanTool.toolName, arguments: {'plan_json': json}),
+    ToolCall(
+      name: ValidatePlanTool.toolName,
+      arguments: jsonDecode(json) as Map<String, Object?>,
+    ),
   ),
 );
 
@@ -58,5 +63,27 @@ void main() {
       9,
     );
     expect(result.content, contains('安全改写'));
+  });
+
+  test('计划结构由工具参数下发（不再写进系统提示词）', () {
+    final parameters = ValidatePlanTool('无').toSchema()['parameters'] as Map;
+    final properties = parameters['properties'] as Map;
+    expect(properties.keys, containsAll(<String>['weeks', 'safety_notes']));
+    expect(parameters['required'], contains('weeks'));
+    final week = (properties['weeks'] as Map)['items'] as Map;
+    final session = ((week['properties'] as Map)['sessions'] as Map)['items'];
+    final exercise =
+        ((session['properties'] as Map)['exercises'] as Map)['items'];
+    expect(
+      (exercise['properties'] as Map).keys,
+      containsAll(<String>[
+        'name',
+        'sets',
+        'reps',
+        'rest_seconds',
+        'target_rpe',
+        'safety_note',
+      ]),
+    );
   });
 }

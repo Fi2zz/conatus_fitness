@@ -9,6 +9,11 @@ abstract final class MusicPlaylistCodec {
   static MusicPlaylist? tryParse(String raw) {
     final root = _decode(raw);
     if (root == null) return null;
+    return tryParseMap(root);
+  }
+
+  /// 解析已结构化的歌单对象（function calling 的工具参数即此形态）。
+  static MusicPlaylist? tryParseMap(Map<String, Object?> root) {
     final name = root['name']?.toString() ?? '';
     if (name.isEmpty) return null;
     final sections = _parseSections(root['sections']);
